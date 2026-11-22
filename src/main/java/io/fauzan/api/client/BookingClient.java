@@ -28,7 +28,7 @@ public class BookingClient {
         this.spec = new RequestSpecBuilder()
                 .setBaseUri(baseUri)
                 .setContentType(ContentType.JSON)
-                .setAccept(ContentType.JSON)
+                .addHeader("Accept", "application/json") // Restful Booker answers 418 to REST Assured's multi-type default
                 .setConfig(RestAssuredConfig.config().httpClient(HttpClientConfig.httpClientConfig()
                         .setParam("http.connection.timeout", timeoutMs)
                         .setParam("http.socket.timeout", timeoutMs)))
