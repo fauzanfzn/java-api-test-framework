@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.fauzan</groupId>
+  <artifactId>java-api-test-framework</artifactId>
+  <version>1.0.0</version>
+  <name>Java API Test Framework (REST Assured + JUnit 5 + Allure)</name>
+
+  <properties>
+    <maven.compiler.release>21</maven.compiler.release>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <rest-assured.version>5.5.6</rest-assured.version>
+    <junit.version>5.11.4</junit.version>
+    <allure.version>2.29.1</allure.version>
+    <!-- override with -Dgroups=mock to run offline -->
+    <groups></groups>
+  </properties>
+
+  <dependencies>
+    <dependency><groupId>io.rest-assured</groupId><artifactId>rest-assured</artifactId><version>${rest-assured.version}</version></dependency>
+    <dependency><groupId>io.rest-assured</groupId><artifactId>json-schema-validator</artifactId><version>${rest-assured.version}</version></dependency>
+    <dependency><groupId>com.fasterxml.jackson.core</groupId><artifactId>jackson-databind</artifactId><version>2.18.2</version></dependency>
+    <dependency><groupId>net.datafaker</groupId><artifactId>datafaker</artifactId><version>2.4.2</version></dependency>
+    <dependency><groupId>io.qameta.allure</groupId><artifactId>allure-rest-assured</artifactId><version>${allure.version}</version></dependency>
+
+    <dependency><groupId>org.junit.jupiter</groupId><artifactId>junit-jupiter</artifactId><version>${junit.version}</version><scope>test</scope></dependency>
+    <dependency><groupId>org.assertj</groupId><artifactId>assertj-core</artifactId><version>3.27.3</version><scope>test</scope></dependency>
+    <dependency><groupId>org.wiremock</groupId><artifactId>wiremock-standalone</artifactId><version>3.10.0</version><scope>test</scope></dependency>
+    <dependency><groupId>io.qameta.allure</groupId><artifactId>allure-junit5</artifactId><version>${allure.version}</version><scope>test</scope></dependency>
+    <dependency><groupId>org.slf4j</groupId><artifactId>slf4j-simple</artifactId><version>2.0.16</version><scope>test</scope></dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>3.5.2</version>
+        <configuration>
+          <groups>${groups}</groups>
+          <systemPropertyVariables>
+            <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
+          </systemPropertyVariables>
+          <rerunFailingTestsCount>1</rerunFailingTestsCount>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>io.qameta.allure</groupId>
+        <artifactId>allure-maven</artifactId>
+        <version>2.15.2</version>
+        <configuration>
+          <reportVersion>2.32.0</reportVersion>
+          <resultsDirectory>allure-results</resultsDirectory>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
