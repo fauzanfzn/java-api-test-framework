@@ -39,9 +39,7 @@ jobs:
 
       - name: Build Allure report
         if: always()
-        run: |
-          mvn -B -q allure:report
-          cp target/site/allure-maven-plugin/allure-maven.html target/site/allure-maven-plugin/index.html
+        run: mvn -B -q allure:report # index.html is the Allure app; allure-maven.html is only a Maven-site wrapper
 
       - uses: actions/upload-pages-artifact@v3
         if: always() && github.ref == 'refs/heads/main'
